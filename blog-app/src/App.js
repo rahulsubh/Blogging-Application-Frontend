@@ -1,14 +1,20 @@
-import logo from './logo.svg';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-import { Button } from 'reactstrap';
-import Base from './components/Base';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
+import About from './pages/About';
 
 function App() {
   return (
-    <Base>
-      <h1>This is App Component</h1>
-    </Base>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element = {<h1>this is home page</h1>} />
+        <Route path="/login" element = {<Login />} />
+        <Route path="/signup" element = {<Signup />} />
+        <Route path="/about" element = {<About />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
