@@ -1,11 +1,14 @@
 import React from 'react'
+import Base from '../components/Base'
 
 function Login() {
     return (
-        <div>
-            <h1>Login</h1>
-            <p>Welcome to Login Page</p>
-        </div>
+        <Base>
+            <div>
+                <h1>Login</h1>
+                <p>Welcome to Login Page</p>
+            </div>
+        </Base>
     )
 }
 

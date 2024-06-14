@@ -1,11 +1,14 @@
 import React from 'react'
+import Base from '../components/Base'
 
 function Signup() {
     return (
-        <div>
-            <h1>Signup</h1>
-            <p>Welcome to Signup Page</p>
-        </div>
+        <Base>
+            <div>
+                <h1>Signup</h1>
+                <p>Welcome to Signup Page</p>
+            </div>
+        </Base>
     )
 }
 
