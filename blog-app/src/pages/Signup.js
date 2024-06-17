@@ -63,8 +63,8 @@ function Signup() {
             console.log("Error log");
             //handle errors in proper way
             setError({
-                errors:error,
-                isError:true
+                errors: error,
+                isError: true
             });
         })
     }
