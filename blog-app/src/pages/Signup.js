@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { signUp } from '../services/user-service';
-import { Button, Card, CardBody, CardHeader, Col, Container, Form, FormGroup, Input, Label, Row } from 'reactstrap'
+import { Button, Card, CardBody, CardHeader, Col, Container, Form, FormFeedback, FormGroup, Input, Label, Row } from 'reactstrap'
 import Base from '../components/Base'
 import { toast } from 'react-toastify';
 
@@ -40,6 +40,11 @@ function Signup() {
     // submit the form
     const submitForm = (event) => {
         event.preventDefault();
+        // if(error.isError){
+        //     toast.error("Form data is invalid , correct all details then submit !!");
+        //     setError({...error,isError:false});
+        //     return;
+        // }
         console.log(data);
         // data validate
         //call server api for sending data
@@ -56,6 +61,11 @@ function Signup() {
         }).catch((error) => {
             console.log(error);
             console.log("Error log");
+            //handle errors in proper way
+            setError({
+                errors:error,
+                isError:true
+            });
         })
     }
     return (
@@ -81,7 +91,11 @@ function Signup() {
                                             id="name"
                                             onChange={(e) => handleChange(e, 'name')}
                                             value={data.name}
+                                            invalid={error.errors?.response?.data?.name ? true : false}
                                         />
+                                        <FormFeedback>
+                                            {error.errors?.response?.data?.name}
+                                        </FormFeedback>
                                     </FormGroup>
                                     {/*email field*/}
                                     <FormGroup>
@@ -92,7 +106,11 @@ function Signup() {
                                             id="email"
                                             onChange={(e) => handleChange(e, 'email')}
                                             value={data.email}
+                                            invalid={error.errors?.response?.data?.email ? true : false}
                                         />
+                                        <FormFeedback>
+                                            {error.errors?.response?.data?.email}
+                                        </FormFeedback>
                                     </FormGroup>
                                     {/*password field*/}
                                     <FormGroup>
@@ -103,7 +121,11 @@ function Signup() {
                                             id="password"
                                             onChange={(e) => handleChange(e, 'password')}
                                             value={data.password}
+                                            invalid={error.errors?.response?.data?.password ? true : false}
                                         />
+                                        <FormFeedback>
+                                            {error.errors?.response?.data?.password}
+                                        </FormFeedback>
                                     </FormGroup>
                                     {/*text area field*/}
                                     <FormGroup>
@@ -115,7 +137,11 @@ function Signup() {
                                             style={{ height: "250px" }}
                                             onChange={(e) => handleChange(e, 'about')}
                                             value={data.about}
+                                            invalid={error.errors?.response?.data?.about ? true : false}
                                         />
+                                        <FormFeedback>
+                                            {error.errors?.response?.data?.about}
+                                        </FormFeedback>
                                     </FormGroup>
 
                                     <Container className="text-center">
