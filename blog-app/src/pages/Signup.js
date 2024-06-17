@@ -1,8 +1,47 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Card, CardBody, CardHeader, Col, Container, Form, FormGroup, Input, Label, Row } from 'reactstrap'
 import Base from '../components/Base'
 
 function Signup() {
+
+    const [data, setData] = useState({
+        name: '',
+        email: '',
+        password: '',
+        about: ''
+    });
+
+    const [error, setError] = useState({
+        errors: {},
+        isError: false
+    });
+
+    // handle change
+
+    const handleChange = (e, property) => {
+        // dynamic setting the values
+        setData({ ...data, [property]: e.target.value })
+    }
+
+    // resetting the form
+    const resetData = () => {
+        setData(
+            {
+                name: '',
+                email: '',
+                password: '',
+                about: ''
+            }
+        );
+    }
+
+    // submit the form
+    const submitForm = (event) => {
+        event.preventDefault();
+        console.log(data);
+        // data validate
+        //call server api for sending data
+    }
     return (
         <Base>
             <Container>
@@ -14,7 +53,7 @@ function Signup() {
                             </CardHeader>
                             <CardBody>
                                 {/* {creating form} */}
-                                <Form>
+                                <Form onSubmit={submitForm}>
 
 
                                     {/*Name field*/}
@@ -24,6 +63,8 @@ function Signup() {
                                             type="text"
                                             placeholder="Enter here"
                                             id="name"
+                                            onChange={(e) => handleChange(e, 'name')}
+                                            value={data.name}
                                         />
                                     </FormGroup>
                                     {/*email field*/}
@@ -33,6 +74,8 @@ function Signup() {
                                             type="email"
                                             placeholder="Enter here"
                                             id="email"
+                                            onChange={(e) => handleChange(e, 'email')}
+                                            value={data.email}
                                         />
                                     </FormGroup>
                                     {/*password field*/}
@@ -42,6 +85,8 @@ function Signup() {
                                             type="password"
                                             placeholder="Enter here"
                                             id="password"
+                                            onChange={(e) => handleChange(e, 'password')}
+                                            value={data.password}
                                         />
                                     </FormGroup>
                                     {/*text area field*/}
@@ -52,12 +97,14 @@ function Signup() {
                                             placeholder="Enter here"
                                             id="about"
                                             style={{ height: "250px" }}
+                                            onChange={(e) => handleChange(e, 'about')}
+                                            value={data.about}
                                         />
                                     </FormGroup>
 
                                     <Container className="text-center">
                                         <Button color="light" outline>Register</Button>
-                                        <Button color="secondary" className="ms-2" type="reset">Reset</Button>
+                                        <Button onClick={resetData} color="secondary" className="ms-2" type="reset">Reset</Button>
                                     </Container>
                                 </Form>
                             </CardBody>
