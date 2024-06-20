@@ -16,12 +16,15 @@ import {
 import Base from "../components/Base";
 import { loginUser } from "../services/user-service";
 import { doLogin } from "../auth";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
   const [loginDetail, setLoginDetail] = useState({
     username: "",
     password: "",
   });
+
+  const navigate = useNavigate();
 
   const handleChange = (e, field) => {
     let actualValue = e.target.value;
@@ -52,6 +55,7 @@ function Login() {
         doLogin(data,() => {
             console.log("login detail is saved to local storage.");
             //redirect to user dashboard page
+            navigate("/user/dashboard");
         });
         toast.success("Login Success");
       })
