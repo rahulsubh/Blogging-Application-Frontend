@@ -12,7 +12,6 @@ import {
     DropdownToggle,
     DropdownMenu,
     DropdownItem,
-    NavbarText,
 } from 'reactstrap';
 import { doLogout, getCurrentUserDetail, isLoggedIn } from '../auth';
 
@@ -78,7 +77,7 @@ function CustomNavbar() {
                             <DropdownToggle nav caret>
                                 More
                             </DropdownToggle>
-                            <DropdownMenu right>
+                            <DropdownMenu end>
                                 <DropdownItem tag={ReactLink} to="/services">Contact Us</DropdownItem>
                                 <DropdownItem>Facebook</DropdownItem>
                                 <DropdownItem divider />
