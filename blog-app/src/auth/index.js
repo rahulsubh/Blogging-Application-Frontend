@@ -8,7 +8,7 @@ export const isLoggedIn = () => {
 
 //doLogin
 
-export const doLogin = (data,next) => {
+export const doLogin = (data, next) => {
   localStorage.setItem("data", JSON.stringify(data));
   next();
 };
@@ -27,5 +27,14 @@ export const getCurrentUserDetail = () => {
     return JSON.parse(localStorage.getItem("data"))?.user;
   } else {
     return undefined;
+  }
+};
+
+//get token
+export const getToken = () => {
+  if (isLoggedIn()) {
+    return JSON.parse(localStorage.getItem("data")).token;
+  } else {
+    return null;
   }
 };
