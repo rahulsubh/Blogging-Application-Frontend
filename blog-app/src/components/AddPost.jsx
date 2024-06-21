@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import JoditEditor from 'jodit-react';
+import React, { useEffect, useRef, useState } from 'react'
 import { Button, Card, CardBody, Container, Form, Input, Label } from 'reactstrap';
 import { loadAllCategories } from '../services/category-service';
 
@@ -7,15 +8,24 @@ function AddPost() {
     const [categories, setCategories] = useState([]);
 
 
+    const editor = useRef(null);
+    const [content, setContent] = useState('');
+
+    const config ={
+        placeholder: "Start typing..."
+    };
+
+
+
     useEffect(
         () => {
-        loadAllCategories().then((data) => {
-            console.log(data);
-            setCategories(data);
-        }).catch(error => {
-            console.log(error);
-        });
-    }, []);
+            loadAllCategories().then((data) => {
+                console.log(data);
+                setCategories(data);
+            }).catch(error => {
+                console.log(error);
+            });
+        }, []);
 
     // console.log(categories);
 
@@ -36,12 +46,18 @@ function AddPost() {
                         </div>
                         <div className="my-3">
                             <Label for="content">Post Content</Label>
-                            <Input
+                            {/* <Input
                                 type="textarea"
                                 id="content"
                                 placeholder="Enter here"
                                 className="rounded-0"
-                                style={{ height: '300px' }} />
+                                style={{ height: '300px' }} /> */}
+                            <JoditEditor
+                                ref={editor}
+                                value={content}
+                                config={config}
+                                onChange={newContent => setContent(newContent)}
+                            />
                         </div>
                         <div className="my-3">
                             <Label for="category">Post Category</Label>
