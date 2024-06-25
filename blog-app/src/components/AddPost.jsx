@@ -1,5 +1,6 @@
 import JoditEditor from 'jodit-react';
 import React, { useEffect, useRef, useState } from 'react'
+import { toast } from 'react-toastify';
 import { Button, Card, CardBody, Container, Form, Input, Label } from 'reactstrap';
 import { getCurrentUserDetail } from '../auth';
 import { loadAllCategories } from '../services/category-service';
@@ -68,7 +69,7 @@ function AddPost() {
         //submit the form on server
         post['userId'] = user.id;
         doCreatePost(post).then(data => {
-            alert("post created");
+            toast.success("post created");
             console.log(post);
         }).catch((error) => {
             alert("error");
