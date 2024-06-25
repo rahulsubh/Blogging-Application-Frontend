@@ -6,8 +6,8 @@ function Post({post = { title : "This is the default post title", content : "Thi
         <Card className="border-0 shadow-sm mt-3">
             <CardBody>
                 <h1>{post.title}</h1>
-                <CardText>
-                    {post.content.substring(0,30)}...
+                <CardText dangerouslySetInnerHTML={{__html:post.content.substring(0,60) + "...."}}>
+                   
                 </CardText>
                 <div>
                     <Button >Read More</Button>
