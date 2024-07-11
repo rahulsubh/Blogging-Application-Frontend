@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import InfiniteScroll from 'react-infinite-scroll-component';
 import { toast } from 'react-toastify';
 import { Col, Container, Pagination, PaginationItem, PaginationLink, Row } from 'reactstrap';
 import { loadAllPosts } from '../services/post-service';
@@ -15,28 +16,43 @@ function NewFeed() {
         pageNumber: ''
     });
 
+    const [currentPage, setCurrentPage] = useState(0);
+
     useEffect(() => {
         //load all the posts from server.
-        changePage(0);
-    }, []);
+        changePage(currentPage);
+    }, [currentPage]);
 
     const changePage = (pageNumber = 0, pageSize = 5) => {
-        
+
         // console.log(pageNumber);
         // console.log(postContent.pageNumber);
-        if(pageNumber > postContent.pageNumber && postContent.lastPage){
+        if (pageNumber > postContent.pageNumber && postContent.lastPage) {
             return;
         }
-        if(pageNumber < postContent.pageNumber && postContent.pageNumber === 0){
+        if (pageNumber < postContent.pageNumber && postContent.pageNumber === 0) {
             return;
         }
         loadAllPosts(pageNumber, pageSize).then(data => {
-            setPostContent(data);
-            window.scroll(0,0);
+            setPostContent({
+                content: [...postContent.content, ...data.content],
+                totalPages: data.totalPages,
+                totalElements: data.totalElements,
+                pageSize: data.pageSize,
+                lastPage: data.lastPage,
+                pageNumber: data.pageNumber
+            });
+            console.log(data);
         }).catch(error => {
             toast.error("Error in loading post");
         });
     };
+
+    const changePageInfinite = () => {
+        console.log("page changed");
+        setCurrentPage(currentPage + 1);
+    };
+
     return (
         <div className="container-fluid">
             <Row>
@@ -47,12 +63,20 @@ function NewFeed() {
                     }
                 }>
                     <h1>Blogs Content ({postContent?.totalElements})</h1>
-                    {
-                        postContent.content.map((post) => (
-                            <Post post={post} key={post.postId} />
-                        ))
-                    }
-                    <Container className="mt-3">
+
+                    <InfiniteScroll
+                        dataLength={postContent.content.length}
+                        next={changePageInfinite}
+                        hasMore={!postContent.lastPage}
+                    >
+                        {
+                            postContent.content.map((post) => (
+                                <Post post={post} key={post.postId} />
+                            ))
+                        }
+                    </InfiniteScroll>
+
+                    {/* <Container className="mt-3">
                         <Pagination size='lg'>
                             <PaginationItem onClick={() => changePage(postContent.pageNumber - 1)} disabled={postContent.pageNumber === 0}>
                                 <PaginationLink previous>
@@ -74,7 +98,7 @@ function NewFeed() {
                                 </PaginationLink>
                             </PaginationItem>
                         </Pagination>
-                    </Container>
+                    </Container> */}
                 </Col>
             </Row>
         </div>
