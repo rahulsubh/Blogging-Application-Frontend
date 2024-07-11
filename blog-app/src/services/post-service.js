@@ -21,3 +21,17 @@ export const loadPost = (postId) => {
         .get("/posts/" + postId)
         .then(response => response.data);
 };
+
+// upload post banner image
+
+export const uploadPostImage = (image, postId) => {
+    let formData = new FormData();
+    formData.append("image", image);
+
+    return privateAxios.post(`/post/image/upload/${postId}`, formData, {
+        headers: {
+            'Content-Type':'multipart/form-data'
+        }
+    })
+        .then(response => response.data);
+};
