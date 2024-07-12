@@ -37,7 +37,19 @@ export const uploadPostImage = (image, postId) => {
 };
 
 // get category wise posts
-export function loadPostCategoryWise(categoryId){
+export function loadPostCategoryWise(categoryId) {
     return privateAxios.get(`/category/${categoryId}/posts`)
         .then(response => response.data);
 }
+
+// get posts user wise
+export const loadPostUserWise = (userId) => {
+    return privateAxios.get(`/user/${userId}/posts`)
+        .then(response => response.data);
+};
+
+// delete post
+export const deletePosts = (postId) => {
+    return privateAxios.delete(`/posts/${postId}`)
+        .then(response => response.data);
+};

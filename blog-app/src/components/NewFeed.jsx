@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { toast } from 'react-toastify';
 import { Col, Container, Pagination, PaginationItem, PaginationLink, Row } from 'reactstrap';
-import { loadAllPosts } from '../services/post-service';
+import { deletePosts, loadAllPosts } from '../services/post-service';
 import Post from './Post';
 
 function NewFeed() {
@@ -48,6 +48,22 @@ function NewFeed() {
         });
     };
 
+     // function to delete post
+
+  const deletePost = (post) => {
+    //going to delete post
+    deletePosts(post.postId).then(data => {
+      console.log(data);
+      toast.success("Post Deleted ..");
+
+      let newPostContents = postContent.content.filter(p => p.postId !== post.postId);
+      setPostContent({...postContent, content : newPostContents});
+    }).catch(error => {
+      console.log(error);
+      toast.error("Error in deleting post !!");
+    });
+  };
+
     const changePageInfinite = () => {
         console.log("page changed");
         setCurrentPage(currentPage + 1);
@@ -70,7 +86,7 @@ function NewFeed() {
                     >
                         {
                             postContent.content.map((post) => (
-                                <Post post={post} key={post.postId} />
+                                <Post deletePost={deletePost} post={post} key={post.postId} />
                             ))
                         }
                     </InfiniteScroll>

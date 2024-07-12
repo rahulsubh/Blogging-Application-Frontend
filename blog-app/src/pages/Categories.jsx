@@ -5,7 +5,7 @@ import { Col, Container, Row } from 'reactstrap';
 import Base from '../components/Base'
 import CategorySideMenu from '../components/CategorySideMenu';
 import Post from '../components/Post';
-import { loadPostCategoryWise } from '../services/post-service';
+import { deletePosts, loadPostCategoryWise } from '../services/post-service';
 
 function Categories() {
 
@@ -23,6 +23,19 @@ function Categories() {
         });
     }, [categoryId]);
 
+    const deletePost = (post) => {
+        //going to delete post
+        deletePosts(post.postId).then(data => {
+          console.log(data);
+          toast.success("Post Deleted ..");
+          let newPosts = posts.filter(p => p.postId !== post.postId);
+          setPosts([...newPosts]);
+        }).catch(error => {
+          console.log(error);
+          toast.error("Error in deleting post !!");
+        });
+      };
+
     return (
         <Base>
             <Container className="mt-3">
@@ -34,7 +47,7 @@ function Categories() {
                         <h1>Blogs Count ({posts.length})</h1>
                         {posts && posts.map((post, index) => {
                             return (
-                                <Post key={index} post={post} />
+                                <Post deletePost={deletePost} key={index} post={post} />
                             )
                         })}
                         {posts.length <= 0 ? <h1>No post in this category</h1> : ''}
