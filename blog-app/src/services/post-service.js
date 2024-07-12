@@ -30,8 +30,14 @@ export const uploadPostImage = (image, postId) => {
 
     return privateAxios.post(`/post/image/upload/${postId}`, formData, {
         headers: {
-            'Content-Type':'multipart/form-data'
+            'Content-Type': 'multipart/form-data'
         }
     })
         .then(response => response.data);
 };
+
+// get category wise posts
+export function loadPostCategoryWise(categoryId){
+    return privateAxios.get(`/category/${categoryId}/posts`)
+        .then(response => response.data);
+}

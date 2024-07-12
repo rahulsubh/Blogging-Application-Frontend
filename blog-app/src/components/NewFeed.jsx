@@ -42,7 +42,7 @@ function NewFeed() {
                 lastPage: data.lastPage,
                 pageNumber: data.pageNumber
             });
-            console.log(data);
+            // console.log(data);
         }).catch(error => {
             toast.error("Error in loading post");
         });
@@ -58,8 +58,7 @@ function NewFeed() {
             <Row>
                 <Col md={
                     {
-                        size: 10,
-                        offset: 1
+                        size: 12
                     }
                 }>
                     <h1>Blogs Content ({postContent?.totalElements})</h1>
