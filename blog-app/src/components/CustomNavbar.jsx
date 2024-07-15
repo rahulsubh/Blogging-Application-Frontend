@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { NavLink as ReactLink, useNavigate } from 'react-router-dom';
 import {
     Collapse,
@@ -14,8 +14,11 @@ import {
     DropdownItem,
 } from 'reactstrap';
 import { doLogout, getCurrentUserDetail, isLoggedIn } from '../auth';
+import userContext from '../context/userContext';
 
 function CustomNavbar() {
+
+    const userContextData = useContext(userContext);
     const [isOpen, setIsOpen] = useState(false);
 
     const navigate = useNavigate();
@@ -32,6 +35,10 @@ function CustomNavbar() {
         doLogout(() => {
             //logged out
             setLogin(false);
+            userContextData.setUser({
+                data: null,
+                login: false
+            });
             navigate("/");
         });
     };
@@ -93,13 +100,13 @@ function CustomNavbar() {
                             login && (
                                 <>
                                     <NavItem>
-                                        <NavLink tag={ReactLink} to = "/user/profile-info">
+                                        <NavLink tag={ReactLink} to="/user/profile-info">
                                             Profile Info
                                         </NavLink>
                                     </NavItem>
-                                    
+
                                     <NavItem>
-                                        <NavLink tag={ReactLink} to = "/user/dashboard">
+                                        <NavLink tag={ReactLink} to="/user/dashboard">
                                             {user.email}
                                         </NavLink>
                                     </NavItem>

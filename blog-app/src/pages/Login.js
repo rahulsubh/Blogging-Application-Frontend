@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { toast } from "react-toastify";
 import {
   Button,
@@ -17,8 +17,12 @@ import Base from "../components/Base";
 import { loginUser } from "../services/user-service";
 import { doLogin } from "../auth";
 import { useNavigate } from "react-router-dom";
+import userContext from "../context/userContext";
 
 function Login() {
+  
+  const userContextData = useContext(userContext);
+  
   const [loginDetail, setLoginDetail] = useState({
     username: "",
     password: "",
@@ -50,12 +54,17 @@ function Login() {
     loginUser(loginDetail)
       .then((data) => {
         console.log(data);
-        
+
         // save the data to localstorage
-        doLogin(data,() => {
-            console.log("login detail is saved to local storage.");
-            //redirect to user dashboard page
-            navigate("/user/dashboard");
+        doLogin(data, () => {
+          console.log("login detail is saved to local storage.");
+          //redirect to user dashboard page
+          userContextData.setUser({
+            data: data.user,
+            login: true
+          });
+          console.log(userContextData);
+          navigate("/user/dashboard");
         });
         toast.success("Login Success");
       })
