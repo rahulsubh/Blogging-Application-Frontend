@@ -1,4 +1,4 @@
-import { myAxios } from "./helper";
+import { myAxios, privateAxios } from "./helper";
 
 export const signUp = (user) => {
     return myAxios
@@ -14,5 +14,10 @@ export const loginUser = (loginDetail) => {
 
 export const getUser = (userId) => {
     return myAxios.get(`/users/${userId}`)
+        .then(response => response.data);
+};
+
+export const updateUser = (userId,user) => {
+    return privateAxios.put(`/users/${userId}`,user)
         .then(response => response.data);
 };

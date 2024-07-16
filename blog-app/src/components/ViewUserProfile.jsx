@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Button, Card, CardBody, CardFooter, Container, Table } from 'reactstrap';
 import { getCurrentUserDetail, isLoggedIn } from '../auth';
+import { Link } from 'react-router-dom';
 
 const ViewUserProfile = ({ user }) => {
 
@@ -69,7 +70,7 @@ const ViewUserProfile = ({ user }) => {
                 </Table>
                 {currentUser ? (currentUser.id === user.id) ? (
                     <CardFooter className="text-center">
-                        <Button color="warning">Update Profile</Button>
+                        <Button tag={Link} to={`/user/update-user/${user.id}`} color="warning">Update Profile</Button>
                     </CardFooter>
                 ) : '' : ''}
             </CardBody>
