@@ -8,7 +8,7 @@ function Post({ post = { id: -1, title: "This is the default post title", conten
 
     const userContextData = useContext(userContext);
     const [user, setUser] = useState(null);
-    const [login, setLogin] = useState(null);
+    const [, setLogin] = useState(null);
 
     useEffect(() => {
         setUser(getCurrentUserDetail());
@@ -25,6 +25,7 @@ function Post({ post = { id: -1, title: "This is the default post title", conten
                 <div>
                     <Link className="btn btn-secondary border-0" to={'/posts/' + post.postId}>Read More</Link>
                     {userContextData.user.login && (user && user.id === post.user.id ? <Button onClick={() => deletePost(post)} color="danger" className="ms-2">Delete</Button> : '') }
+                    {userContextData.user.login && (user && user.id === post.user.id ? <Button tag={Link} to={`/user/update-blog/${post.postId}`} color="warning" className="ms-2">Update</Button> : '') }
                 </div>
             </CardBody>
         </Card>
